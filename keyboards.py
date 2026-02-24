@@ -1,21 +1,17 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from recipes import RECIPES
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+def create_dishes_keyboard():
+    """
+    Создаёт клавиатуру с выбором блюд для Telegram бота.
+    Возвращает InlineKeyboardMarkup.
+    """
+    # Пример списка блюд
+    dishes = ["Суп", "Пицца", "Салат", "Десерт"]
 
-def dishes_keyboard(selected: list[str] | None = None):
-    if selected is None:
-        selected = []
+    # Формируем кнопки
+    keyboard = [
+        [InlineKeyboardButton(dish, callback_data=dish)] for dish in dishes
+    ]
 
-    buttons = []
-
-    for dish in RECIPES.keys():
-        text = f"✅ {dish}" if dish in selected else dish
-        buttons.append(
-            [InlineKeyboardButton(text=text, callback_data=f"dish:{dish}")]
-        )
-
-    buttons.append(
-        [InlineKeyboardButton(text="Готово", callback_data="done")]
-    )
-
-    return InlineKeyboardMarkup(inline_keyboard=buttons)
+    # Создаём объект клавиатуры
+    return InlineKeyboardMarkup(keyboard)
