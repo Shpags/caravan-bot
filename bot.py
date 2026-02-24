@@ -1,22 +1,19 @@
-import asyncio
-import logging
-from aiogram import Bot, Dispatcher, F
-from aiogram.types import Message, CallbackQuery
+import os
+from aiogram import Bot, Dispatcher, types, F
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.filters.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.filters import CommandStart
-
-from states import EventForm
-from keyboards import dishes_keyboard
-from calculator import calculate_ingredients
 from recipes import RECIPES
+from calculator import calculate_ingredients
+from keyboards import create_dishes_keyboard
+from states import OrderState
 
-TOKEN = "8280724314:AAEtjVuWgPkGQkGSkWBUdStR45lzu-qcLQE"
+TOKEN = os.getenv("TOKEN")
 
-logging.basicConfig(level=logging.INFO)
-
-bot = Bot(token=TOKEN, request_timeout=60)
+bot = Bot(token=TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
+
 
 
 @dp.message(CommandStart())
