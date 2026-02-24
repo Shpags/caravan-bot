@@ -101,3 +101,31 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+    import os
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Bot is running!"
+
+if __name__ == "__main__":
+    # Запуск твоего polling бота (твой существующий код)
+    from telegram.ext import ApplicationBuilder
+    import asyncio
+
+    TOKEN = os.environ.get("BOT_TOKEN")
+
+    async def main():
+        # Здесь вызываешь свою функцию старта бота
+        from bot_logic import start_bot  # пример
+        await start_bot(TOKEN)
+
+    asyncio.run(main())
+
+    # Запускаем маленький Flask-сервер для Render
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
